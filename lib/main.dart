@@ -41,12 +41,12 @@ class _MyHomePageState extends State<MyHomePage> {
             decoration: BoxDecoration(
               color: Colors.grey[100],
             ),
-            // child: const UiKitView(
-            //   viewType: 'test1',
-            //   layoutDirection: TextDirection.ltr,
-            //   creationParams: {},
-            //   creationParamsCodec: StandardMessageCodec(),
-            // ),
+            child: const UiKitView(
+              viewType: 'test1',
+              layoutDirection: TextDirection.ltr,
+              creationParams: {},
+              creationParamsCodec: StandardMessageCodec(),
+            ),
           ),
           Expanded(
             child: ListView.builder(
@@ -56,12 +56,12 @@ class _MyHomePageState extends State<MyHomePage> {
                   decoration: BoxDecoration(
                     color: index % 2 == 0 ? Colors.grey[300] : Colors.grey[400],
                   ),
-                  // child: const UiKitView(
-                  //   viewType: 'test2',
-                  //   layoutDirection: TextDirection.ltr,
-                  //   creationParams: {},
-                  //   creationParamsCodec: StandardMessageCodec(),
-                  // ),
+                  child: const UiKitView(
+                    viewType: 'test2',
+                    layoutDirection: TextDirection.ltr,
+                    creationParams: {},
+                    creationParamsCodec: StandardMessageCodec(),
+                  ),
                 );
               },
               itemCount: 100,
