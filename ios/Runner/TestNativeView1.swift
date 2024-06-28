@@ -53,29 +53,31 @@ class TestNativeView1: NSObject, FlutterPlatformView {
         return _view
     }
 
-    func createNativeView(view _view: UIView){
-        if let superview = _view.superview {
-          NSLayoutConstraint.activate([
-            _view.widthAnchor.constraint(equalTo: superview.widthAnchor),
-            _view.heightAnchor.constraint(equalTo: superview.heightAnchor),
-            _view.centerXAnchor.constraint(equalTo: superview.centerXAnchor),
-            _view.centerYAnchor.constraint(equalTo: superview.centerYAnchor),
-          ])
-        }
+    func createNativeView(view _view: UIView) {
+        _view.backgroundColor = UIColor.black
         
-        _view.backgroundColor = UIColor.white
         let nativeLabel = UILabel()
         nativeLabel.text = "상단 네이티브 뷰"
-        nativeLabel.textColor = UIColor.black
+        nativeLabel.textColor = UIColor.white
         nativeLabel.textAlignment = .center
-        nativeLabel.frame = CGRect(x: 0, y: 0, width: 180, height: 48.0)
+        nativeLabel.translatesAutoresizingMaskIntoConstraints = false
+        
         _view.addSubview(nativeLabel)
         
-        // 뷰에 탭 제스처 추가
+        // Auto Layout constraints to make the label the same size as the view
+        NSLayoutConstraint.activate([
+            nativeLabel.topAnchor.constraint(equalTo: _view.topAnchor),
+            nativeLabel.bottomAnchor.constraint(equalTo: _view.bottomAnchor),
+            nativeLabel.leadingAnchor.constraint(equalTo: _view.leadingAnchor),
+            nativeLabel.trailingAnchor.constraint(equalTo: _view.trailingAnchor)
+        ])
+        
+        // Add tap gesture recognizer
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(viewTapped))
         _view.addGestureRecognizer(tapGestureRecognizer)
         _view.isUserInteractionEnabled = true
     }
+
     
     @objc func viewTapped() {
         if let url = URL(string: "https://www.example.com/1") {
