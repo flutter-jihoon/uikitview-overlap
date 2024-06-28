@@ -54,10 +54,19 @@ class TestNativeView2: NSObject, FlutterPlatformView {
     }
     
     func createNativeView(view _view: UIView){
-        _view.backgroundColor = UIColor.lightGray
+        if let superview = _view.superview {
+          NSLayoutConstraint.activate([
+            _view.widthAnchor.constraint(equalTo: superview.widthAnchor),
+            _view.heightAnchor.constraint(equalTo: superview.heightAnchor),
+            _view.centerXAnchor.constraint(equalTo: superview.centerXAnchor),
+            _view.centerYAnchor.constraint(equalTo: superview.centerYAnchor),
+          ])
+        }
+        
+        _view.backgroundColor = UIColor.white
         let nativeLabel = UILabel()
         nativeLabel.text = "리스트 네이티브 뷰"
-        nativeLabel.textColor = UIColor.white
+        nativeLabel.textColor = UIColor.black
         nativeLabel.textAlignment = .center
         nativeLabel.frame = CGRect(x: 0, y: 0, width: 180, height: 48.0)
         _view.addSubview(nativeLabel)
@@ -69,7 +78,7 @@ class TestNativeView2: NSObject, FlutterPlatformView {
     }
     
     @objc func viewTapped() {
-        if let url = URL(string: "https://www.example.com") {
+        if let url = URL(string: "https://www.example.com/2") {
             UIApplication.shared.open(url)
         }
     }
