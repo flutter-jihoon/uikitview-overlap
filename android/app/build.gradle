@@ -23,6 +23,9 @@ if (flutterVersionName == null) {
 }
 
 android {
+    defaultConfig {
+        minSdkVersion 19
+    }
     namespace "com.example.uikitview_overlap"
     compileSdkVersion flutter.compileSdkVersion
     ndkVersion flutter.ndkVersion
