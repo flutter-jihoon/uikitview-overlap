@@ -64,13 +64,8 @@ class TestNativeView1: NSObject, FlutterPlatformView {
         
         _view.addSubview(nativeLabel)
         
-        // Auto Layout constraints to make the label the same size as the view
-        NSLayoutConstraint.activate([
-            nativeLabel.topAnchor.constraint(equalTo: _view.topAnchor),
-            nativeLabel.bottomAnchor.constraint(equalTo: _view.bottomAnchor),
-            nativeLabel.leadingAnchor.constraint(equalTo: _view.leadingAnchor),
-            nativeLabel.trailingAnchor.constraint(equalTo: _view.trailingAnchor)
-        ])
+        nativeLabel.centerXAnchor.constraint(equalTo: _view.centerXAnchor).isActive = true
+        nativeLabel.centerYAnchor.constraint(equalTo: _view.centerYAnchor).isActive = true
         
         // Add tap gesture recognizer
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(viewTapped))

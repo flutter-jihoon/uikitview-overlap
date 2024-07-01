@@ -7,11 +7,13 @@ import 'package:flutter/services.dart';
 class NativeView extends StatelessWidget {
   final double height;
   final String viewType;
+  final Map<String, int> creationParams;
 
   const NativeView({
     super.key,
     required this.height,
     required this.viewType,
+    required this.creationParams,
   });
 
   @override
@@ -41,7 +43,7 @@ class NativeView extends StatelessWidget {
               id: params.id,
               viewType: viewType,
               layoutDirection: TextDirection.ltr,
-              creationParams: {},
+              creationParams: creationParams,
               creationParamsCodec: const StandardMessageCodec(),
               onFocus: () {
                 params.onFocusChanged(true);
@@ -55,8 +57,9 @@ class NativeView extends StatelessWidget {
         return UiKitView(
           viewType: viewType,
           layoutDirection: TextDirection.ltr,
-          creationParams: const {},
+          creationParams: creationParams,
           creationParamsCodec: const StandardMessageCodec(),
+          hitTestBehavior: PlatformViewHitTestBehavior.opaque,
         );
       default:
         throw UnsupportedError('Unsupported platform view');

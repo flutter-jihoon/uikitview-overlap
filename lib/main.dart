@@ -36,35 +36,30 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: Column(
         children: [
-          Container(
-            decoration: const BoxDecoration(
-              border: Border.symmetric(
-                horizontal: BorderSide(
-                  color: Colors.black,
-                  width: 1,
-                ),
-              ),
-            ),
-            child: const NativeView(
-              height: 100,
-              viewType: 'test1',
-            ),
+          const NativeView(
+            height: 100,
+            viewType: 'test1',
+            creationParams: {},
           ),
+          // SizedBox(
+          //   height: 100,
+          //   child: InkWell(
+          //     onTap: () {
+          //       debugPrint('Gesture Detected');
+          //     },
+          //   ),
+          // ),
           Expanded(
-            child: ListView.separated(
+            child: ListView.builder(
               itemBuilder: (context, index) {
-                return const NativeView(
-                  height: 50,
+                return NativeView(
+                  height: 100,
                   viewType: 'test2',
+                  creationParams: {'index': index},
                 );
+                // return SizedBox(height: 100, child: Text('Item $index'));
               },
               itemCount: 100,
-              separatorBuilder: (BuildContext context, int index) {
-                return const Divider(
-                  thickness: 1,
-                  color: Colors.black,
-                );
-              },
             ),
           ),
         ],

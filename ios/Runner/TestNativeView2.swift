@@ -46,15 +46,25 @@ class TestNativeView2: NSObject, FlutterPlatformView {
         _view = UIView()
         super.init()
         // iOS views can be created here
-        createNativeView(view: _view)
+        if let creationParams = args as? [String: Any],
+           let index = creationParams["index"] as? Int {
+            createNativeView(view: _view, index: index)
+        } else {
+            createNativeView(view: _view, index: 0) // Default to index 0 if not provided
+        }
     }
     
     func view() -> UIView {
         return _view
     }
     
-    func createNativeView(view _view: UIView){        
-        _view.backgroundColor = UIColor.white
+    func createNativeView(view _view: UIView, index: Int) {
+        // Change background color based on whether the index is odd or even
+        if index % 2 == 0 {
+            _view.backgroundColor = UIColor.systemBlue // Even index
+        } else {
+            _view.backgroundColor = UIColor.systemRed // Odd index
+        }
         
         let nativeLabel = UILabel()
         nativeLabel.text = "리스트 네이티브 뷰"
@@ -64,13 +74,8 @@ class TestNativeView2: NSObject, FlutterPlatformView {
         
         _view.addSubview(nativeLabel)
         
-        // Auto Layout constraints to make the label the same size as the view
-        NSLayoutConstraint.activate([
-            nativeLabel.topAnchor.constraint(equalTo: _view.topAnchor),
-            nativeLabel.bottomAnchor.constraint(equalTo: _view.bottomAnchor),
-            nativeLabel.leadingAnchor.constraint(equalTo: _view.leadingAnchor),
-            nativeLabel.trailingAnchor.constraint(equalTo: _view.trailingAnchor)
-        ])
+        nativeLabel.centerXAnchor.constraint(equalTo: _view.centerXAnchor).isActive = true
+        nativeLabel.centerYAnchor.constraint(equalTo: _view.centerYAnchor).isActive = true
         
         // Add tap gesture recognizer
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(viewTapped))
@@ -84,4 +89,3 @@ class TestNativeView2: NSObject, FlutterPlatformView {
         }
     }
 }
-
