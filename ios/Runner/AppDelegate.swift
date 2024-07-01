@@ -8,13 +8,15 @@ import UIKit
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]?
     ) -> Bool {
         GeneratedPluginRegistrant.register(with: self)
+        weak var registrar = self.registrar(forPlugin: "plugin")
 
-        weak var registrar = self.registrar(forPlugin: "plugin-name")
+        self.registrar(forPlugin: "plugin1")!.register(
+            TestNativeViewFactory1(messenger: registrar!.messenger()),
+            withId: "test1")
+        self.registrar(forPlugin: "plugin2")!.register(
+            TestNativeViewFactory2(messenger: registrar!.messenger()),
+            withId: "test2")
 
-        let factory = FLNativeViewFactory(messenger: registrar!.messenger())
-        self.registrar(forPlugin: "<plugin-name>")!.register(
-            factory,
-            withId: "<platform-view-type>")
         return super.application(application, didFinishLaunchingWithOptions: launchOptions)
     }
 }

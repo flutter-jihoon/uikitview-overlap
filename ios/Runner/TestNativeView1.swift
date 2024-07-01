@@ -1,5 +1,5 @@
 //
-//  FLNativeView.swift
+//  TestNativeView1.swift
 //  Runner
 //
 //  Created by 임지훈 on 6/27/24.
@@ -8,7 +8,7 @@
 import Flutter
 import UIKit
 
-class FLNativeViewFactory: NSObject, FlutterPlatformViewFactory {
+class TestNativeViewFactory1: NSObject, FlutterPlatformViewFactory {
     private var messenger: FlutterBinaryMessenger
 
     init(messenger: FlutterBinaryMessenger) {
@@ -21,7 +21,7 @@ class FLNativeViewFactory: NSObject, FlutterPlatformViewFactory {
         viewIdentifier viewId: Int64,
         arguments args: Any?
     ) -> FlutterPlatformView {
-        return FLNativeView(
+        return TestNativeView1(
             frame: frame,
             viewIdentifier: viewId,
             arguments: args,
@@ -34,7 +34,7 @@ class FLNativeViewFactory: NSObject, FlutterPlatformViewFactory {
     }
 }
 
-class FLNativeView: NSObject, FlutterPlatformView {
+class TestNativeView1: NSObject, FlutterPlatformView {
     private var _view: UIView
 
     init(
@@ -53,13 +53,30 @@ class FLNativeView: NSObject, FlutterPlatformView {
         return _view
     }
 
-    func createNativeView(view _view: UIView){
-        _view.backgroundColor = UIColor.blue
+    func createNativeView(view _view: UIView) {
+        _view.backgroundColor = UIColor.black
+        
         let nativeLabel = UILabel()
-        nativeLabel.text = "Native text from iOS"
+        nativeLabel.text = "상단 네이티브 뷰"
         nativeLabel.textColor = UIColor.white
         nativeLabel.textAlignment = .center
-        nativeLabel.frame = CGRect(x: 0, y: 0, width: 180, height: 48.0)
+        nativeLabel.translatesAutoresizingMaskIntoConstraints = false
+        
         _view.addSubview(nativeLabel)
+        
+        nativeLabel.centerXAnchor.constraint(equalTo: _view.centerXAnchor).isActive = true
+        nativeLabel.centerYAnchor.constraint(equalTo: _view.centerYAnchor).isActive = true
+        
+        // Add tap gesture recognizer
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(viewTapped))
+        _view.addGestureRecognizer(tapGestureRecognizer)
+        _view.isUserInteractionEnabled = true
+    }
+
+    
+    @objc func viewTapped() {
+        if let url = URL(string: "https://www.example.com/1") {
+            UIApplication.shared.open(url)
+        }
     }
 }

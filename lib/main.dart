@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:uikitview_overlap/native_view.dart';
 
 void main() {
   runApp(const MyApp());
@@ -28,6 +28,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: const Text('UiKitView Overlap Test'),
         backgroundColor: Colors.white,
@@ -35,34 +36,28 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: Column(
         children: [
-          Container(
-            width: double.infinity,
+          const NativeView(
             height: 100,
-            decoration: BoxDecoration(
-              color: Colors.grey[100],
-            ),
-            // child: const UiKitView(
-            //   viewType: 'test1',
-            //   layoutDirection: TextDirection.ltr,
-            //   creationParams: {},
-            //   creationParamsCodec: StandardMessageCodec(),
-            // ),
+            viewType: 'test1',
+            creationParams: {},
           ),
+          // SizedBox(
+          //   height: 100,
+          //   child: InkWell(
+          //     onTap: () {
+          //       debugPrint('Gesture Detected');
+          //     },
+          //   ),
+          // ),
           Expanded(
             child: ListView.builder(
               itemBuilder: (context, index) {
-                return Container(
-                  height: 50,
-                  decoration: BoxDecoration(
-                    color: index % 2 == 0 ? Colors.grey[300] : Colors.grey[400],
-                  ),
-                  // child: const UiKitView(
-                  //   viewType: 'test2',
-                  //   layoutDirection: TextDirection.ltr,
-                  //   creationParams: {},
-                  //   creationParamsCodec: StandardMessageCodec(),
-                  // ),
+                return NativeView(
+                  height: 100,
+                  viewType: 'test2',
+                  creationParams: {'index': index},
                 );
+                // return SizedBox(height: 100, child: Text('Item $index'));
               },
               itemCount: 100,
             ),
