@@ -63,6 +63,7 @@ class TestNativeView1: NSObject, FlutterPlatformView {
         nativeLabel.translatesAutoresizingMaskIntoConstraints = false
         
         _view.addSubview(nativeLabel)
+        _view.clipsToBounds = true
         
         nativeLabel.centerXAnchor.constraint(equalTo: _view.centerXAnchor).isActive = true
         nativeLabel.centerYAnchor.constraint(equalTo: _view.centerYAnchor).isActive = true
