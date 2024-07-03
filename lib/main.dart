@@ -1,4 +1,7 @@
+import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:uikitview_overlap/native_view.dart';
 
 void main() {
@@ -34,33 +37,35 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Colors.white,
         surfaceTintColor: Colors.transparent,
       ),
-      body: Column(
+      body: Stack(
         children: [
-          const NativeView(
-            height: 100,
-            viewType: 'test1',
-            creationParams: {},
-          ),
-          // SizedBox(
-          //   height: 100,
-          //   child: InkWell(
-          //     onTap: () {
-          //       debugPrint('Gesture Detected');
-          //     },
-          //   ),
-          // ),
-          Expanded(
+          Padding(
+            padding: const EdgeInsets.only(top: 100),
             child: ListView.builder(
               itemBuilder: (context, index) {
                 return NativeView(
-                  height: 100,
+                  height: 200,
                   viewType: 'test2',
                   creationParams: {'index': index},
+                  hitTestBehavior: PlatformViewHitTestBehavior.opaque,
+                  gestureRecognizers: const <Factory<
+                      OneSequenceGestureRecognizer>>{},
                 );
                 // return SizedBox(height: 100, child: Text('Item $index'));
               },
               itemCount: 100,
             ),
+          ),
+          NativeView(
+            height: 100,
+            viewType: 'test1',
+            creationParams: const {},
+            hitTestBehavior: PlatformViewHitTestBehavior.translucent,
+            gestureRecognizers: <Factory<OneSequenceGestureRecognizer>>{
+              Factory<OneSequenceGestureRecognizer>(
+                () => EagerGestureRecognizer(),
+              ),
+            },
           ),
         ],
       ),

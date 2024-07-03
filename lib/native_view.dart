@@ -8,12 +8,16 @@ class NativeView extends StatelessWidget {
   final double height;
   final String viewType;
   final Map<String, int> creationParams;
+  final PlatformViewHitTestBehavior hitTestBehavior;
+  final Set<Factory<OneSequenceGestureRecognizer>> gestureRecognizers;
 
   const NativeView({
     super.key,
     required this.height,
     required this.viewType,
     required this.creationParams,
+    required this.hitTestBehavior,
+    required this.gestureRecognizers,
   });
 
   @override
@@ -35,7 +39,7 @@ class NativeView extends StatelessWidget {
               controller: controller as AndroidViewController,
               gestureRecognizers: const <Factory<
                   OneSequenceGestureRecognizer>>{},
-              hitTestBehavior: PlatformViewHitTestBehavior.opaque,
+              hitTestBehavior: hitTestBehavior,
             );
           },
           onCreatePlatformView: (params) {
@@ -59,7 +63,8 @@ class NativeView extends StatelessWidget {
           layoutDirection: TextDirection.ltr,
           creationParams: creationParams,
           creationParamsCodec: const StandardMessageCodec(),
-          hitTestBehavior: PlatformViewHitTestBehavior.opaque,
+          hitTestBehavior: hitTestBehavior,
+          gestureRecognizers: const <Factory<OneSequenceGestureRecognizer>>{},
         );
       default:
         throw UnsupportedError('Unsupported platform view');
