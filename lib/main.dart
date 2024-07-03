@@ -1,4 +1,7 @@
+import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:uikitview_overlap/native_view.dart';
 
 void main() {
@@ -34,38 +37,34 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Colors.white,
         surfaceTintColor: Colors.transparent,
       ),
-      body: Column(
+      body: Stack(
         children: [
-          Container(
-            decoration: const BoxDecoration(
-              border: Border.symmetric(
-                horizontal: BorderSide(
-                  color: Colors.black,
-                  width: 1,
-                ),
-              ),
-            ),
-            child: const NativeView(
-              height: 100,
-              viewType: 'test1',
-            ),
-          ),
-          Expanded(
-            child: ListView.separated(
+          Padding(
+            padding: const EdgeInsets.only(top: 100),
+            child: ListView.builder(
               itemBuilder: (context, index) {
-                return const NativeView(
-                  height: 50,
+                return NativeView(
+                  height: 200,
                   viewType: 'test2',
+                  creationParams: {'index': index},
+                  hitTestBehavior: PlatformViewHitTestBehavior.opaque,
+                  gestureRecognizers: const <Factory<
+                      OneSequenceGestureRecognizer>>{},
                 );
               },
               itemCount: 100,
-              separatorBuilder: (BuildContext context, int index) {
-                return const Divider(
-                  thickness: 1,
-                  color: Colors.black,
-                );
-              },
             ),
+          ),
+          NativeView(
+            height: 100,
+            viewType: 'test1',
+            creationParams: const {},
+            hitTestBehavior: PlatformViewHitTestBehavior.translucent,
+            gestureRecognizers: <Factory<OneSequenceGestureRecognizer>>{
+              Factory<OneSequenceGestureRecognizer>(
+                () => EagerGestureRecognizer(),
+              ),
+            },
           ),
         ],
       ),
